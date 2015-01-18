@@ -1,0 +1,17 @@
+---
+
+- name: get metadata on legacy servers
+  shell: > 
+    hostname; len=`hostname | wc -c` ; export len; perl -E 'say "=" x ($ENV{"len"} - 1)' ;
+    ec2-metadata -i -a -z -s -v 
+  register: result
+  tags: 
+    - legacy
+
+
+- name: copy results to local file
+  local_action: copy > 
+    content="{{ result.stdout }}"
+    dest="/tmp/{{ inventory_hostname }}"
+  tags: 
+    - legacy

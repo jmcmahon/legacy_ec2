@@ -1,0 +1,3 @@
+---
+
+- include: legacy_ec2.yml
